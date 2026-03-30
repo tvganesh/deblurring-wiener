@@ -1,0 +1,7 @@
+# Test images - not tracked in repo
+kutty-1.jpg
+
+# Build output
+deblurring
+*.o
+*.out
