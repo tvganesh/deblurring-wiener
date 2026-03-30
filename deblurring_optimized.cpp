@@ -23,7 +23,7 @@ Description : Blind deconvolution via iterative kernel search.
 #include <opencv2/opencv.hpp>
 
 // ---- Tunable constants -------------------------------------------------
-static const double KAPPA  = 0.01;   // Wiener regularisation (noise/signal ratio)
+static const double KAPPA  = 100.0;  // Wiener regularisation — tuned by EPOCH (was 0.01)
 static const double LAMBDA = 0.005;  // weight of sharpness reward in loss
 
 // ========================================================================
@@ -306,23 +306,15 @@ cv::Mat deblurColor(const cv::Mat& bgrImage, const cv::Mat& K, double kappa)
 
 int main(int argc, char** argv)
 {
-    if (argc < 2) {
-        printf("Usage: ./deblurring <image_path>\n");
-        printf("Example: ./deblurring photo.jpg\n");
-        return -1;
-    }
-    const std::string imagePath = argv[1];
-
     // Grayscale copy — used for all kernel search / loss computation
-    cv::Mat im = cv::imread(imagePath, cv::IMREAD_GRAYSCALE);
+    cv::Mat im = cv::imread("kutty-1.jpg", cv::IMREAD_GRAYSCALE);
     if (im.empty()) {
-        printf("Error: could not load '%s'\n", imagePath.c_str());
+        printf("Error: could not load 'kutty-1.jpg'\n");
         return -1;
     }
 
     // Colour copy — used only for the final colour output
-    cv::Mat imColor = cv::imread(imagePath, cv::IMREAD_COLOR);
-
+    cv::Mat imColor = cv::imread("kutty-1.jpg", cv::IMREAD_COLOR);
 
     cv::namedWindow("Input image (color)", cv::WINDOW_NORMAL);
     cv::imshow("Input image (color)", imColor);

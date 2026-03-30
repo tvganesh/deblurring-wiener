@@ -1,7 +1,19 @@
-# Test images - not tracked in repo
-kutty-1.jpg
+# CMake build directory
+build/
 
-# Build output
+# Compiled binaries
 deblurring
-*.o
-*.out
+deblurring_optimized
+
+# macOS metadata
+.DS_Store
+
+# Editor/IDE folders
+.vscode/
+.idea/
+
+# Test images (optional — remove these two lines if you want to track images)
+*.jpg
+*.JPG
+*.png
+*.jpeg
