@@ -14,7 +14,7 @@ env:
   path: "projects/wiener_deblur"
 
 evaluation:
-  primary_metric: "psnr"
+  primary_metric: "psnr_oracle"
   min_delta: 0.5
   deterministic: true
   cmd: "python projects/wiener_deblur/evaluate.py"

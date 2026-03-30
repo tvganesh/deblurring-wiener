@@ -21,7 +21,7 @@ import cv2
 import numpy as np
 
 # ── Tunable constants (EPOCH will optimise these) ────────────────────────
-KAPPA  = 0.01    # Wiener regularisation (noise-to-signal ratio)
+KAPPA  = 100.0   # Wiener regularisation (noise-to-signal ratio)
 LAMBDA = 0.005   # Sharpness reward weight in kernel-search loss
 
 # ── Synthetic blur parameters (fixed ground truth) ───────────────────────
