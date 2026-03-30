@@ -1,0 +1,18 @@
+{
+  "run_id": "run-20260330-1710",
+  "round": 1,
+  "phase": "baseline",
+  "kappa": 0.01,
+  "lambda": 0.005,
+  "synth_len": 15,
+  "synth_angle": 45.0,
+  "psnr": 39.5717,
+  "psnr_oracle": 13.651,
+  "psnr_blurred": 42.9745,
+  "best_kernel": "motion len=2 angle=5.0",
+  "best_loss": 0.000668,
+  "tests_passed": 13,
+  "tests_failed": 0,
+  "pass_rate": 1.0,
+  "notes": "Baseline: blind search finds wrong kernel (len=2 vs true len=15). KAPPA=0.01 causes severe noise amplification with strong blur — oracle PSNR 13.65 dB is far below the blurred input (42.97 dB). Primary optimization target: KAPPA."
+}
