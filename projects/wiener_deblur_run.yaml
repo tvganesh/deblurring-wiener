@@ -1,0 +1,26 @@
+project:
+  name: "Wiener Deblur"
+  slug: wiener_deblur
+
+run:
+  id: null
+  goal: "Optimise KAPPA (Wiener regularisation) to maximise PSNR on a synthetic motion-blur benchmark derived from kutty-1.jpg"
+  task_type: code_improvement
+  max_rounds: 5
+  max_retries_per_round: 1
+
+env:
+  manager: uv
+  path: "projects/wiener_deblur"
+
+evaluation:
+  primary_metric: "psnr"
+  min_delta: 0.5
+  deterministic: true
+  cmd: "python projects/wiener_deblur/evaluate.py"
+  test_cmd: "pytest projects/wiener_deblur/tests/"
+
+git:
+  push_to_remote: true
+  create_prs: true
+  target_branch: main
