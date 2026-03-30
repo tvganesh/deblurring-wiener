@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/tvganesh/backup-macbook/software/opencv/deblurring-wiener/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
