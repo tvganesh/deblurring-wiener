@@ -23,7 +23,7 @@ import numpy as np
 # ── Tunable constants (EPOCH will optimise these) ────────────────────────
 KAPPA            = 100.0  # Wiener regularisation (noise-to-signal ratio)
 LAMBDA           = 0.005  # Sharpness reward weight in kernel-search loss
-POST_BLEND_ALPHA = 0.9    # Blend weight: output = alpha*Wiener + (1-alpha)*blurred
+POST_BLEND_ALPHA = 0.8    # Blend weight: output = alpha*Wiener + (1-alpha)*blurred
                           # Reduces residual ringing by anchoring to the blurred input
 
 # ── Synthetic blur parameters (fixed ground truth) ───────────────────────
