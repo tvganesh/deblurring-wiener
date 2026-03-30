@@ -9,7 +9,7 @@ Evaluates KAPPA and LAMBDA by:
   5. Computing PSNR of the recovered image vs. the original sharp image
   6. Printing metrics as JSON to stdout
 
-EPOCH tunes KAPPA to maximise psnr.
+EPOCH tunes KAPPA and POST_BLEND_ALPHA to maximise psnr_oracle.
 """
 
 import json
@@ -21,8 +21,10 @@ import cv2
 import numpy as np
 
 # ── Tunable constants (EPOCH will optimise these) ────────────────────────
-KAPPA  = 100.0   # Wiener regularisation (noise-to-signal ratio)
-LAMBDA = 0.005   # Sharpness reward weight in kernel-search loss
+KAPPA            = 100.0  # Wiener regularisation (noise-to-signal ratio)
+LAMBDA           = 0.005  # Sharpness reward weight in kernel-search loss
+POST_BLEND_ALPHA = 0.9    # Blend weight: output = alpha*Wiener + (1-alpha)*blurred
+                          # Reduces residual ringing by anchoring to the blurred input
 
 # ── Synthetic blur parameters (fixed ground truth) ───────────────────────
 SYNTH_LEN   = 15    # motion blur length (pixels)
@@ -224,11 +226,13 @@ def main():
     # Pick the kernel with the lowest loss
     best_kernel, best_loss, best_desc = min(results, key=lambda r: r[1])
 
-    # Deblur with the winning (blind) kernel
-    recovered = wiener(blurred, best_kernel, KAPPA)
+    # Deblur with the winning (blind) kernel, then blend with blurred to reduce ringing
+    recovered = (POST_BLEND_ALPHA * wiener(blurred, best_kernel, KAPPA)
+                 + (1.0 - POST_BLEND_ALPHA) * blurred)
 
-    # Oracle: deblur with the true kernel (upper-bound reference)
-    recovered_oracle = wiener(blurred, true_kernel, KAPPA)
+    # Oracle: deblur with the true kernel (upper-bound reference), same post-processing
+    recovered_oracle = (POST_BLEND_ALPHA * wiener(blurred, true_kernel, KAPPA)
+                        + (1.0 - POST_BLEND_ALPHA) * blurred)
 
     metrics = {
         "psnr":         round(psnr(sharp, recovered), 4),

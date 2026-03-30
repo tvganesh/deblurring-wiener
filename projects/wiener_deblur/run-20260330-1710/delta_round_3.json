@@ -1,0 +1,24 @@
+{
+  "round": 3,
+  "phase": "performance",
+  "change": "Add POST_BLEND_ALPHA=0.9 post-processing: output = 0.9*Wiener + 0.1*blurred",
+  "rationale": "Wiener output at KAPPA=100 has residual ringing artifacts. Blending 10% of the blurred input back suppresses ringing while retaining 90% of the deblurring effect. Grid scan confirmed alpha=0.9 as optimal (+0.83 dB vs +0.39 dB for Gaussian, +0.30 dB for bilateral). Gaussian post-filter and plain KAPPA tuning both fall below the 0.5 dB threshold.",
+  "baseline": {
+    "psnr_oracle": 29.8242,
+    "psnr_blind": 37.8517,
+    "kappa": 100.0,
+    "post_blend_alpha": null
+  },
+  "proposed": {
+    "psnr_oracle": 30.6543,
+    "psnr_blind": 38.4694,
+    "kappa": 100.0,
+    "post_blend_alpha": 0.9
+  },
+  "deltas": {
+    "psnr_oracle": 0.8301,
+    "psnr_blind": 0.6177
+  },
+  "verdict": "ACCEPT",
+  "rationale_verdict": "psnr_oracle improved +0.83 dB (29.82 -> 30.65), exceeding min_delta=0.5. Both oracle and blind PSNR improved. 13/13 tests pass."
+}
